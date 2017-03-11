@@ -138,7 +138,6 @@ class SupportVectorMachine
         $this->samples = array_merge($this->samples, $samples);
         $this->targets = array_merge($this->targets, $labels);
 
-        //$this->labels = $labels;
         $trainingSet = DataTransformer::trainingSet($this->samples, $this->targets, in_array($this->type, [Type::EPSILON_SVR, Type::NU_SVR]));
         file_put_contents($trainingSetFileName = $this->varPath.uniqid('phpml', true), $trainingSet);
         $modelFileName = $trainingSetFileName.'-model';
@@ -184,7 +183,7 @@ class SupportVectorMachine
         unlink($outputFileName);
 
         if (in_array($this->type, [Type::C_SVC, Type::NU_SVC])) {
-            $predictions = DataTransformer::predictions($predictions, $this->labels);
+            $predictions = DataTransformer::predictions($predictions, $this->targets);
         } else {
             $predictions = explode(PHP_EOL, trim($predictions));
         }
