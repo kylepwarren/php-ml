@@ -4,9 +4,14 @@ declare(strict_types=1);
 
 namespace Phpml\SupportVectorMachine;
 
+use Phpml\Helper\Trainable;
+
+
 class SupportVectorMachine
 {
-    /**
+	 use Trainable;
+	 
+	 /**
      * @var int
      */
     private $type;
@@ -130,8 +135,11 @@ class SupportVectorMachine
      */
     public function train(array $samples, array $labels)
     {
-        $this->labels = $labels;
-        $trainingSet = DataTransformer::trainingSet($samples, $labels, in_array($this->type, [Type::EPSILON_SVR, Type::NU_SVR]));
+        $this->samples = array_merge($this->samples, $samples);
+        $this->targets = array_merge($this->targets, $labels);
+
+        //$this->labels = $labels;
+        $trainingSet = DataTransformer::trainingSet($this->samples, $this->targets, in_array($this->type, [Type::EPSILON_SVR, Type::NU_SVR]));
         file_put_contents($trainingSetFileName = $this->varPath.uniqid('phpml', true), $trainingSet);
         $modelFileName = $trainingSetFileName.'-model';
 
