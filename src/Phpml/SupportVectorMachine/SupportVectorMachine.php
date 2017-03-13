@@ -131,12 +131,12 @@ class SupportVectorMachine
 
     /**
      * @param array $samples
-     * @param array $labels
+     * @param array $targets
      */
-    public function train(array $samples, array $labels)
+    public function train(array $samples, array $targets)
     {
         $this->samples = array_merge($this->samples, $samples);
-        $this->targets = array_merge($this->targets, $labels);
+        $this->targets = array_merge($this->targets, $targets);
 
         $trainingSet = DataTransformer::trainingSet($this->samples, $this->targets, in_array($this->type, [Type::EPSILON_SVR, Type::NU_SVR]));
         file_put_contents($trainingSetFileName = $this->varPath.uniqid('phpml', true), $trainingSet);
