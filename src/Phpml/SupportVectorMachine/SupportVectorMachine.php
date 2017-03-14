@@ -89,7 +89,7 @@ class SupportVectorMachine
     /**
      * @var array
      */
-    private $labels;
+    private $targets;
 
     /**
      * @param int        $type
